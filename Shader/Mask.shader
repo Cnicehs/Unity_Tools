@@ -1,4 +1,4 @@
-﻿Shader "Hidden/Mask"
+Shader "Hidden/Mask"
 {
     Properties
     {
@@ -50,15 +50,8 @@
             {
                 half4 col = tex2D(_MainTex, i.uv);
                 half4 mask = tex2D(_Mask, i.uv);
-                if(mask.a<_Cutoff)
-                {
-                    return fixed4(0,0,0,0);
-                }else
-                {
-                    // col.a*=mask.a;
-                    // return fixed4(mask.a,mask.a,mask.a,mask.a);
-                    return col;
-                }
+                clip(mask.a-_Cutoff);
+                return col;
             }
             ENDCG
         }
